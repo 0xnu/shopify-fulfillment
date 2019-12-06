@@ -1,0 +1,44 @@
+{
+  "name": "sfa",
+  "version": "1.0.10",
+  "description": "Shopify Fulfillment API.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon ./index.js"
+  },
+  "author": "Finbarrs Oketunji",
+  "license": "ISC",
+  "dependencies": {
+    "@hapi/boom": "^8.0.1",
+    "@hapi/joi": "^16.1.8",
+    "ajax-request": "^1.2.3",
+    "axios": "^0.19.0",
+    "bcryptjs": "^2.4.3",
+    "bluebird": "^3.7.2",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "es6-promise": "^4.2.8",
+    "express": "^4.17.1",
+    "express-router": "0.0.1",
+    "fastify": "^1.14.1",
+    "fastify-swagger": "^1.2.0",
+    "fetch": "^1.1.0",
+    "js-logger": "^1.6.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.7.5",
+    "pm2": "^4.2.0",
+    "request": "^2.88.0",
+    "superagent": "^5.1.2",
+    "validator": "^12.1.0",
+    "xml2json-light": "^1.0.6",
+    "yarn": "^1.21.0"
+  },
+  "devDependencies": {
+    "eslint": "^5.14.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.16.0",
+    "nodemon": "^1.19.4"
+  }
+}

@@ -1,0 +1,35 @@
+version: '3.6'
+services:
+  api:
+    image: mhart/alpine-node:latest
+    container_name: sfa-node
+    build: .
+    ports:
+      - 3000:3000
+    command: npm run start
+    links:
+        - mongo
+    depends_on:
+        - mongo
+    networks:
+      - esnet
+  mongo:
+    container_name: sfa-mongo
+    image: mongo
+    volumes:
+      - ./data:/data/db
+    environment:
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - discovery.type=single-node
+      - MONGO_URL=mongodb+srv://dbuser:dbpassword@sfa-1s993.mongodb.net/test?retryWrites=true&w=majority
+    logging:
+      driver: none
+    ports:
+      - "27017:27017"
+    networks:
+      - esnet
+volumes:
+  esdata:
+networks:
+  esnet:
