@@ -18,12 +18,12 @@ const orderRoutes = [
   },
   {
     method: 'POST',
-    url: '/api/insertorders/:arr',
+    url: '/api/insertorders',
     handler: orderController.insertOrders,
   },
   {
     method: 'POST',
-    url: '/api/insertdoc/',
+    url: '/api/insertdoc',
     handler: orderController.sendDoc,
   },
   {

@@ -1,10 +1,10 @@
 const boom = require('@hapi/boom');
-
 const Order = require('../models/Order');
-
 const axios = require('axios');
-
-const qs = require('querystring')
+const qs = require('querystring');
+const request = require('request');
+const fetch = require('node-fetch');
+global.Headers = fetch.Headers;
 
 // Get all order
 exports.getOrder = async () => {
@@ -99,12 +99,12 @@ exports.ordersStatus = async (req, res) => {
         res.send(ordersStatus);
       })
       .catch(error => {
-        console.log("api error:" + error);
+        console.log("API Error:" + error);
         throw error;
     })
     })
     .catch(error => {
-        console.log("api error:" + error);
+        console.log("API Error:" + error);
         throw error;
     })
 };
@@ -150,17 +150,20 @@ exports.orderStatus = async (req, res) => {
         // return response.data;
         res.send(orderStatus);
         })
-      .catch(err => {
-        console.log(err);
+      .catch(error => {
+        console.log("API Error:" + error);
+        throw error;
       })
       })
-      .catch(err => {
-        console.log(err);
+      .catch(error => {
+        console.log("API Error:" + error);
+        throw error;
       })
-}
+};
 
 //Insert orders
-exports.insertOrders = async () => {
+exports.insertOrders = async (req, res) => {
+
   //Order Status from endpoint
   //Define headers and login
   const config = {
@@ -170,27 +173,45 @@ exports.insertOrders = async () => {
     'GSUID' : '158'
     }
   }
+  const requestBody = {
+    f: 'json',
+    u: 'boxofheat',
+    p: 'boX_oF_heaT.2019'
+  }
   //Login and retrieve session_digest
-  const requestBody = 'f=json&u=boxofheat&p=boX_oF_heaT.2019';
+  // const requestBody = 'f=json&u=boxofheat&p=boX_oF_heaT.2019';
   const login = 'https://clienti.grupposinergia.net/webservice/login';
-  axios.post(login, requestBody, config)
-    .then((response) => {
+
+  axios.post(login, qs.stringify(requestBody), config)
+    .then(response => {
       //Store session_digest
       var session = [];
       session = response.data.session_digest;
       //Get order status
       const url = 'https://clienti.grupposinergia.net/webservice/logistics/insert_orders';
-      const params = 'f=json&sd='+session+'';
-      return axios.get(url+'?'+ params, config);
-    })
-    .then((response) => {
-      //Get orders
-      var insertOrders = [];
-      insertOrders = response.data;
-      //Log response
-      console.log(insertOrders)
-    });
-}
+      const orders = {
+          name: 'Mario',
+          city: 'Milan',
+          zip: '30318',
+          sd: session,
+          f: 'json'
+      };
+
+      axios.post(url, qs.stringify(orders), config)
+      .then(response => {
+        console.log(response.data);
+        return res.send(response.data);
+      })
+      .catch(error => {
+        console.log("API Error:" + error);
+        return res.error(error);
+      })
+      })
+      .catch(error => {
+        console.log("API Error:" + error);
+        throw error;
+      })
+};
 
 //Insert orders doc
 //file_name: name of the file, must be identical
