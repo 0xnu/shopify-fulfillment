@@ -17,6 +17,11 @@ const articlesRoutes = [
     handler: articlesController.addArticles,
   },
   {
+    method: 'POST',
+    url: '/api/insert_articles',
+    handler: articlesController.insertArticles,
+  },
+  {
     method: 'PUT',
     url: '/api/articles/:id',
     handler: articlesController.updateArticles,
